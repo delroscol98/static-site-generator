@@ -12,7 +12,7 @@ class HTMLNode:
         if type(self.props) is dict:
             res = []
             for key, value in self.props.items():
-                 res.append(f'{key}="{value}"')
+                res.append(f'{key}="{value}"')
 
             return " ".join(res)
 
