@@ -1,4 +1,3 @@
-import re
 from enum import Enum
 
 BlockType = Enum(
@@ -11,9 +10,9 @@ def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
     filtered_blocks = []
     for block in blocks:
+        block = block.strip()
         if block == "":
             continue
-        block = block.strip()
         filtered_blocks.append(block)
 
     return filtered_blocks
@@ -28,10 +27,11 @@ def block_to_block_type(block):
         return BlockType.QUOTE
     if block.startswith("- "):
         return BlockType.UNORDERED_LIST
-
-    lines = block.split("\n")
-    for line in lines:
-        if line[0].isdigit() and line[1] == ".":
-            return BlockType.ORDERED_LIST
+    if block.startswith("1. "):
+        lines = block.split("\n")
+        for line in lines:
+            if not line[0].isdigit() and not line[1] == ".":
+                return BlockType.PARAGRAPH
+        return BlockType.ORDERED_LIST
 
     return BlockType.PARAGRAPH
