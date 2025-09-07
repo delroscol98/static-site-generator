@@ -1,7 +1,4 @@
-from extract_markdown_images_and_links import (
-    extract_markdown_images,
-    extract_markdown_links,
-)
+from extract_markdown import extract_images, extract_links
 from textnode import TextNode, TextType
 
 
@@ -33,7 +30,7 @@ def split_nodes_image(old_nodes):
         if node.text_type != TextType.TEXT:
             res.append(node)
         else:
-            extracted_images = extract_markdown_images(node.text)
+            extracted_images = extract_images(node.text)
             if len(extracted_images) == 0:
                 res.append(node)
             else:
@@ -59,7 +56,7 @@ def split_nodes_link(old_nodes):
         if node.text_type != TextType.TEXT:
             res.append(node)
         else:
-            extracted_links = extract_markdown_links(node.text)
+            extracted_links = extract_links(node.text)
             if len(extracted_links) == 0:
                 res.append(node)
             else:
