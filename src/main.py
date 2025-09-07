@@ -1,6 +1,8 @@
 import os
 import shutil
 
+from generate_page import generate_page
+
 
 def copy_to_destination(source_path, destination_path):
     source_path_contents = os.listdir(source_path)
@@ -34,6 +36,7 @@ def copy_source_to_dest(source_dir, destination_dir):
 
 def main():
     copy_source_to_dest("static", "public")
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 main()
