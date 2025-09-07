@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 
 from generate_page import generate_page, generate_pages_recursive
 
@@ -19,10 +20,8 @@ def copy_to_destination(source_path, destination_path):
 def copy_source_to_dest(source_dir, destination_dir):
     # Clean destination directory
     destination_path = os.path.abspath(destination_dir)
-    if not os.path.exists(destination_path):
-        raise ValueError("Destination directory does not exist")
-
-    shutil.rmtree(destination_path)
+    if os.path.exists(destination_path):
+        shutil.rmtree(destination_path)
 
     # Recreate destination directory
     source_path = os.path.abspath(source_dir)
@@ -35,9 +34,10 @@ def copy_source_to_dest(source_dir, destination_dir):
 
 
 def main():
-    copy_source_to_dest("static", "public")
-    # generate_page("content/index.md", "template.html", "public/index.html")
-    generate_pages_recursive("content", "template.html", "public")
+    basepath = sys.argv[0] if len(sys.argv) > 0 else "/"
+
+    copy_source_to_dest("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 
 main()
